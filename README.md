@@ -1,24 +1,54 @@
 # Abbyy
 
-TODO: Write a gem description
+A Gem for using Abbyy’s Optical Character Recognition (OCR) SDK via their cloud API.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'abbyy'
+```ruby
+  gem 'abbyy'
+```
 
 And then execute:
 
-    $ bundle
+```sh
+  $ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install abbyy
+```sh
+  $ gem install abbyy
+```
+
+## Documentation
 
 ## Usage
 
-TODO: Write usage instructions here
+### Authentication
+
+When you register with Abbyy you will receive an Application ID and Application Password which you can use to authenticate requests to the web service.
+
+```ruby
+  Abbyy.configure do |c|
+    c.application_id = "YOUR APPLICATION ID"
+    c.application_password = "YOUR APPLICATION PASSWORD"
+  end
+```
+
+### Processing an Image
+
+```ruby
+task = Abbyy.process_image('scanned_text.jpg')
+
+until task.status == "Completed"
+  sleep 1
+  task = Abby.get_task_status(task.id)
+end
+
+file = Abby.download_result(task.result_url)
+```
 
 ## Contributing
 
